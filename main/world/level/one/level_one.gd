@@ -3,8 +3,8 @@ class_name LevelOne
 
 func play_level() -> void:
 	
-	yield(self, "main_pulse_timeout")
-	yield(self, "main_pulse_timeout")
+	#yield(self, "main_pulse_timeout")
+	#yield(self, "main_pulse_timeout")
 	yield(self, "main_pulse_timeout")
 	spawn_enemy(0)
 	yield(self, "main_pulse_timeout")

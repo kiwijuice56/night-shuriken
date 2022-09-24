@@ -30,6 +30,9 @@ func camera_rotation() -> void:
 	rotation.x = rot.x
 
 func shoot() -> void:
+	if GlobalData.projectile == 0:
+		return
+	GlobalData.projectile -= 1
 	$AnimationPlayer.current_animation = "shoot"
 	var new_bullet: Bullet = bullet_scene.instance()
 	get_tree().get_root().get_child(0).add_child(new_bullet)

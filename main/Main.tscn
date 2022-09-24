@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://main/world/player/player.gd" type="Script" id=1]
 [ext_resource path="res://main/ui.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://main/world/level/one/LevelOne.tscn" type="PackedScene" id=4]
 [ext_resource path="res://main/world/player/bullet/Bullet.tscn" type="PackedScene" id=5]
 [ext_resource path="res://main/shader/opposite_ui.gdshader" type="Shader" id=6]
+[ext_resource path="res://main/ui/go3v2.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://main/ui/projectile_label.gd" type="Script" id=8]
 
 [sub_resource type="ShaderMaterial" id=6]
 shader = ExtResource( 6 )
@@ -28,6 +30,13 @@ tracks/0/keys = {
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 6 )
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 32
+font_data = ExtResource( 7 )
 
 [node name="Main" type="Node"]
 
@@ -78,3 +87,24 @@ texture = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ProjectileLabel" type="Label" parent="UILayer"]
+material = SubResource( 8 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 6.00006
+margin_top = -39.0
+margin_right = 58.0001
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 7 )
+text = "16"
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="UILayer/ProjectileLabel"]
+
+[node name="Timer" type="Timer" parent="UILayer/ProjectileLabel"]
