@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://main/world/enemy/enemy.gd" type="Script" id=1]
 
-[node name="Enemy" type="Spatial"]
+[sub_resource type="CylinderShape" id=1]
+
+[node name="Enemy" type="Area"]
+collision_layer = 2
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )

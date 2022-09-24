@@ -1,30 +1,56 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://main/world/player/player_camera.gd" type="Script" id=1]
+[ext_resource path="res://main/world/player/player.gd" type="Script" id=1]
 [ext_resource path="res://main/ui.gd" type="Script" id=2]
 [ext_resource path="res://main/ui/crosshair.png" type="Texture" id=3]
 [ext_resource path="res://main/world/level/one/LevelOne.tscn" type="PackedScene" id=4]
+[ext_resource path="res://main/world/player/bullet/Bullet.tscn" type="PackedScene" id=5]
+[ext_resource path="res://main/shader/opposite_ui.gdshader" type="Shader" id=6]
 
-[sub_resource type="Shader" id=3]
-code = "shader_type canvas_item;
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 6 )
 
-void fragment() {
-	float ir = 1.0 - textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0).r;
-    COLOR = vec4(ir, ir, ir, 1.0);
-}"
+[sub_resource type="Animation" id=5]
+resource_name = "shoot"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Flash:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
 
 [sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 3 )
+shader = ExtResource( 6 )
 
 [node name="Main" type="Node"]
 
 [node name="LevelOne" parent="." instance=ExtResource( 4 )]
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.308112, 2.35157 )
+[node name="Player" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.308112, -1.64929 )
 current = true
 script = ExtResource( 1 )
 mouse_sensitivity = 3.0
+bullet_scene = ExtResource( 5 )
+
+[node name="Flash" type="ColorRect" parent="Player"]
+visible = false
+material = SubResource( 6 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+anims/shoot = SubResource( 5 )
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
