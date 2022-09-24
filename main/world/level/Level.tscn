@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://main/world/level/one/SceneMesh.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://main/world/level/level.gd" type="Script" id=2]
+
+[node name="Level" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="SceneMesh" type="MeshInstance" parent="."]
+transform = Transform( -8.74228e-09, 0, -0.2, 0, 0.2, 0, 0.2, 0, -8.74228e-09, 0, 0, 0 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+material/4 = null
+material/5 = null
+material/6 = null
+material/7 = null
+
+[node name="Lights" type="Spatial" parent="."]
+
+[node name="EnemyPaths" type="Spatial" parent="."]
+
+[node name="SpawnedEnemies" type="Spatial" parent="."]
+
+[node name="MainPulse" type="Timer" parent="."]
+autostart = true
