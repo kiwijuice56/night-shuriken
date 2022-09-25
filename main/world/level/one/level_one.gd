@@ -22,7 +22,6 @@ func play_level() -> void:
 	yield(self, "main_pulse_timeout")
 	yield(self, "main_pulse_timeout")
 	queue_speed(1.10)
-	spawn_enemy(4)
 	spawn_enemy(1)
 	spawn_enemy(0)
 	yield(self, "main_pulse_timeout")
