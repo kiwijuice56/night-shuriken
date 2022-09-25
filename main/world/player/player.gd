@@ -16,7 +16,6 @@ var update_position := Vector2()
 var dir_x := 0.0
 var new_dir_x := 0.0
 
-export var mouse_sensitivity := 2.0
 export var y_limit := 90.0
 export var bullet_scene: PackedScene
 var mouse_axis := Vector2()
@@ -33,7 +32,6 @@ func _ready() -> void:
 	noise.period = 4
 	noise.octaves = 2
 	
-	mouse_sensitivity = mouse_sensitivity / 1000
 	y_limit = deg2rad(y_limit)
 	
 	GlobalData.connect("player_disabled_changed", self, "_on_disabled_changed")
@@ -46,9 +44,7 @@ func _on_area_entered(area: Area) -> void:
 		return
 	dead = true
 	$AudioStreamPlayer.playing = true
-	for bullet in bullets:
-		if is_instance_valid(bullet):
-			bullet.queue_free()
+	reset()
 	call_deferred("emit_signal", "restart")
 
 func _on_disabled_changed(disabled: bool) -> void:
@@ -67,6 +63,11 @@ func _process(delta) -> void:
 	if trauma:
 		trauma = max(trauma - decay * delta, 0)
 		shake()
+
+func reset() -> void:
+	for bullet in bullets:
+		if is_instance_valid(bullet):
+			bullet.queue_free()
 
 func add_trauma(amount) -> void:
 	trauma = min(trauma + amount, 1.0)
@@ -89,9 +90,9 @@ func flash(time: float) -> void:
 
 func camera_rotation() -> void:
 	# Horizontal mouse look
-	rot.y -= mouse_axis.x * mouse_sensitivity
+	rot.y -= mouse_axis.x * GlobalData.mouse_sensitivity / 1000
 	# Vertical mouse look
-	rot.x = clamp(rot.x - mouse_axis.y * mouse_sensitivity, -y_limit, y_limit)
+	rot.x = clamp(rot.x - mouse_axis.y * GlobalData.mouse_sensitivity / 1000, -y_limit, y_limit)
 	
 	rotation.y = rot.y
 	rotation.x = rot.x

@@ -1,12 +1,12 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://main/world/player/player.gd" type="Script" id=1]
-[ext_resource path="res://main/ui.gd" type="Script" id=2]
+[ext_resource path="res://star.png" type="Texture" id=2]
 [ext_resource path="res://main/ui/crosshair.png" type="Texture" id=3]
 [ext_resource path="res://main/world/level/one/LevelOne.tscn" type="PackedScene" id=4]
 [ext_resource path="res://main/world/player/bullet/Bullet.tscn" type="PackedScene" id=5]
 [ext_resource path="res://main/shader/opposite_ui.gdshader" type="Shader" id=6]
-[ext_resource path="res://main/ui/go3v2.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://main/ui/font.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://main/ui/projectile_label.gd" type="Script" id=8]
 [ext_resource path="res://main/ui/splash.png" type="Texture" id=9]
 [ext_resource path="res://main/ui/title.gd" type="Script" id=10]
@@ -14,6 +14,10 @@
 [ext_resource path="res://main/main.gd" type="Script" id=12]
 [ext_resource path="res://main/world/enemy/death.wav" type="AudioStream" id=13]
 [ext_resource path="res://main/music/title_loop.mp3" type="AudioStream" id=14]
+[ext_resource path="res://main/ui/pause.gd" type="Script" id=15]
+[ext_resource path="res://main/world/level/two/LevelTwo.tscn" type="PackedScene" id=16]
+[ext_resource path="res://main/ui/grabber.png" type="Texture" id=17]
+[ext_resource path="res://main/ui/mouse_slider.gd" type="Script" id=18]
 
 [sub_resource type="Shader" id=9]
 code = "shader_type canvas_item;
@@ -44,8 +48,11 @@ size = 32
 font_data = ExtResource( 7 )
 
 [sub_resource type="DynamicFont" id=10]
-size = 64
+size = 84
 font_data = ExtResource( 7 )
+
+[sub_resource type="ShaderMaterial" id=20]
+shader = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=11]
 size = 32
@@ -66,7 +73,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Description:modulate")
+tracks/1/path = NodePath("TitleControl/Description:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -78,7 +85,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Title:modulate")
+tracks/2/path = NodePath("TitleControl/HBoxContainer/Title:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -114,7 +121,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("HBoxContainer:modulate")
+tracks/5/path = NodePath("InfoPanel:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -126,7 +133,7 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("ColorRect2:color")
+tracks/6/path = NodePath("Cover:color")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -136,6 +143,69 @@ tracks/6/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Color( 0, 0, 0, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("TitleControl/HBoxContainer/Icon:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Cover:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("FinishLabel:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "finish"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Cover:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FinishLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -154,7 +224,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Description:modulate")
+tracks/1/path = NodePath("TitleControl/Description:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -166,7 +236,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Title:modulate")
+tracks/2/path = NodePath("TitleControl/HBoxContainer/Title:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -202,7 +272,7 @@ tracks/4/keys = {
 "values": [ Color( 0, 0, 0, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("HBoxContainer:modulate")
+tracks/5/path = NodePath("InfoPanel:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -214,7 +284,7 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("ColorRect2:color")
+tracks/6/path = NodePath("Cover:color")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -225,12 +295,24 @@ tracks/6/keys = {
 "update": 0,
 "values": [ Color( 0, 0, 0, 0 ) ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("TitleControl/HBoxContainer/Icon:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 5.5, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=18]
 resource_name = "restart"
 length = 3.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/path = NodePath("Cover:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -246,7 +328,7 @@ tracks/0/keys = {
 resource_name = "start"
 length = 1.8
 tracks/0/type = "value"
-tracks/0/path = NodePath("Description:modulate")
+tracks/0/path = NodePath("TitleControl/Description:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -270,7 +352,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Title:modulate")
+tracks/2/path = NodePath("TitleControl/HBoxContainer/Title:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -281,12 +363,24 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("TitleControl/HBoxContainer/Icon:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
 
 [sub_resource type="Animation" id=16]
 resource_name = "tutorial"
 length = 8.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/path = NodePath("InfoPanel:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -298,20 +392,41 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
+[sub_resource type="ShaderMaterial" id=19]
+shader = ExtResource( 6 )
+
 [sub_resource type="DynamicFont" id=15]
 size = 32
 font_data = ExtResource( 7 )
 
+[sub_resource type="DynamicFont" id=24]
+size = 32
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=22]
+size = 48
+font_data = ExtResource( 7 )
+
+[sub_resource type="StyleBoxFlat" id=21]
+bg_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_left = 2.0
+expand_margin_right = 4.0
+expand_margin_top = 16.0
+expand_margin_bottom = 16.0
+
 [node name="Main" type="Node"]
 script = ExtResource( 12 )
-levels = [ ExtResource( 4 ) ]
+levels = [ ExtResource( 4 ), ExtResource( 16 ) ]
 
 [node name="Player" type="Camera" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.286194, -1.53564 )
 current = true
 script = ExtResource( 1 )
 decay = 0.4
-mouse_sensitivity = 3.0
 bullet_scene = ExtResource( 5 )
 
 [node name="Flash" type="ColorRect" parent="Player"]
@@ -339,14 +454,6 @@ stream = ExtResource( 13 )
 volume_db = -3.0
 
 [node name="UILayer" type="CanvasLayer" parent="."]
-
-[node name="UI" type="Control" parent="UILayer"]
-margin_right = 40.0
-margin_bottom = 40.0
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Crosshair" type="TextureRect" parent="UILayer"]
 material = SubResource( 4 )
@@ -403,30 +510,62 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="UILayer/TitleScreen"]
+[node name="TitleControl" type="Control" parent="UILayer/TitleScreen"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -227.0
-margin_top = -36.0
-margin_right = 227.0
-margin_bottom = 36.0
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/TitleScreen/TitleControl"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -401.0
+margin_top = -104.5
+margin_right = 401.0
+margin_bottom = 104.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="UILayer/TitleScreen/TitleControl/HBoxContainer"]
+margin_top = 57.0
+margin_right = 589.0
+margin_bottom = 152.0
 custom_fonts/font = SubResource( 10 )
 text = "Night Shuriken"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Description" type="Label" parent="UILayer/TitleScreen"]
+[node name="Icon" type="TextureRect" parent="UILayer/TitleScreen/TitleControl/HBoxContainer"]
+material = SubResource( 20 )
+margin_left = 593.0
+margin_right = 802.0
+margin_bottom = 209.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="Label" parent="UILayer/TitleScreen/TitleControl"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -230.0
-margin_top = 28.0
-margin_right = 224.0
-margin_bottom = 100.0
+margin_left = -225.0
+margin_top = 43.0
+margin_right = 229.0
+margin_bottom = 115.0
+custom_colors/font_color = Color( 0.807843, 0, 0, 1 )
 custom_fonts/font = SubResource( 11 )
 text = "Click to start"
 align = 1
@@ -444,8 +583,7 @@ margin_top = -37.5
 margin_right = 227.0
 margin_bottom = 37.5
 custom_fonts/font = SubResource( 11 )
-text = "Eric Alfaro
-Kiwijuice56"
+text = "A game by Eric Alfaro"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -465,6 +603,7 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UILayer/TitleScreen"]
 autoplay = "load"
 anims/RESET = SubResource( 12 )
+anims/finish = SubResource( 23 )
 anims/load = SubResource( 13 )
 anims/restart = SubResource( 18 )
 anims/start = SubResource( 14 )
@@ -472,49 +611,93 @@ anims/tutorial = SubResource( 16 )
 
 [node name="TitleLoop" type="AudioStreamPlayer" parent="UILayer/TitleScreen"]
 stream = ExtResource( 14 )
-volume_db = -4.0
+pitch_scale = 0.6
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UILayer/TitleScreen"]
+[node name="StartSound" type="AudioStreamPlayer" parent="UILayer/TitleScreen"]
 stream = ExtResource( 11 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/TitleScreen"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+[node name="InfoPanel" type="MarginContainer" parent="UILayer/TitleScreen"]
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -340.0
-margin_top = -76.0
-margin_right = 337.0
-margin_bottom = -36.0
+custom_constants/margin_right = 64
+custom_constants/margin_top = 64
+custom_constants/margin_left = 64
+custom_constants/margin_bottom = 64
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="UILayer/TitleScreen/HBoxContainer"]
-margin_top = 2.0
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TitleScreen/InfoPanel"]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 960.0
+margin_bottom = 536.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/TitleScreen/InfoPanel/VBoxContainer"]
+margin_left = 312.0
+margin_right = 583.0
+margin_bottom = 36.0
+size_flags_horizontal = 6
+size_flags_vertical = 0
+
+[node name="Label4" type="Label" parent="UILayer/TitleScreen/InfoPanel/VBoxContainer/HBoxContainer2"]
+material = SubResource( 19 )
+margin_right = 99.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 15 )
+text = "Press "
+
+[node name="Label5" type="Label" parent="UILayer/TitleScreen/InfoPanel/VBoxContainer/HBoxContainer2"]
+margin_left = 103.0
+margin_right = 130.0
+margin_bottom = 36.0
+custom_colors/font_color = Color( 0.603922, 0, 0, 1 )
+custom_fonts/font = SubResource( 15 )
+text = "P "
+
+[node name="Label6" type="Label" parent="UILayer/TitleScreen/InfoPanel/VBoxContainer/HBoxContainer2"]
+material = SubResource( 19 )
+margin_left = 134.0
+margin_right = 271.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 15 )
+text = "TO PAUSE"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="UILayer/TitleScreen/InfoPanel/VBoxContainer"]
+margin_left = 109.0
+margin_top = 436.0
+margin_right = 786.0
+margin_bottom = 472.0
+size_flags_horizontal = 6
+size_flags_vertical = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UILayer/TitleScreen/InfoPanel/VBoxContainer/HBoxContainer3"]
+material = SubResource( 19 )
 margin_right = 64.0
-margin_bottom = 38.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 15 )
 text = "Use "
 
-[node name="Label2" type="Label" parent="UILayer/TitleScreen/HBoxContainer"]
+[node name="Label2" type="Label" parent="UILayer/TitleScreen/InfoPanel/VBoxContainer/HBoxContainer3"]
 margin_left = 68.0
-margin_top = 2.0
 margin_right = 373.0
-margin_bottom = 38.0
+margin_bottom = 36.0
 custom_colors/font_color = Color( 0.603922, 0, 0, 1 )
 custom_fonts/font = SubResource( 15 )
 text = "left mouse / space "
 
-[node name="Label3" type="Label" parent="UILayer/TitleScreen/HBoxContainer"]
+[node name="Label3" type="Label" parent="UILayer/TitleScreen/InfoPanel/VBoxContainer/HBoxContainer3"]
+material = SubResource( 19 )
 margin_left = 377.0
-margin_top = 2.0
 margin_right = 677.0
-margin_bottom = 38.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 15 )
 text = "to shoot shurikens"
 
-[node name="ColorRect2" type="ColorRect" parent="UILayer/TitleScreen"]
+[node name="Cover" type="ColorRect" parent="UILayer/TitleScreen"]
 modulate = Color( 0, 0, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -523,4 +706,126 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="FinishLabel" type="Label" parent="UILayer/TitleScreen"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -102.0
+margin_top = -18.0
+margin_right = 102.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 24 )
+text = "You survived"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pause" type="Control" parent="UILayer"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UILayer/Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Label" type="Label" parent="UILayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -374.0
+margin_top = -76.0
+margin_right = 380.0
+margin_bottom = -4.0
+custom_fonts/font = SubResource( 22 )
+text = "Press Escape to resume"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="UILayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -202.0
+margin_top = 23.0
+margin_right = 175.0
+margin_bottom = 59.0
+custom_fonts/font = SubResource( 11 )
+text = "Aim Sensitivity"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="UILayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -330.0
+margin_top = 125.0
+margin_right = 47.0
+margin_bottom = 161.0
+custom_fonts/font = SubResource( 11 )
+text = "Low"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="UILayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -64.0
+margin_top = 125.0
+margin_right = 313.0
+margin_bottom = 161.0
+custom_fonts/font = SubResource( 11 )
+text = "HIGH"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlider" type="HSlider" parent="UILayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -139.0
+margin_top = 59.0
+margin_right = 117.0
+margin_bottom = 123.0
+rect_min_size = Vector2( 256, 0 )
+custom_icons/grabber_disabled = ExtResource( 17 )
+custom_icons/grabber_highlight = ExtResource( 17 )
+custom_icons/grabber = ExtResource( 17 )
+custom_styles/slider = SubResource( 21 )
+min_value = 0.25
+max_value = 5.0
+step = 0.01
+value = 3.0
+script = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Tween" type="Tween" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

@@ -7,6 +7,7 @@ onready var player = get_tree().get_root().get_node("Main/Player")
 var projectile := 8 setget set_projectile
 var player_disabled := true setget set_player_disabled
 var tutorial := true
+var mouse_sensitivity := 3.0
 
 func set_player_disabled(new) -> void:
 	player_disabled = new

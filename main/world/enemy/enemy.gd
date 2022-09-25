@@ -6,14 +6,16 @@ export var offset_y := 0.2
 
 var stage := 0
 var kill_mode := false
+var dead := false
 
 func _ready() -> void:
 	connect("area_entered", self, "bullet_entered")
+	
 
 func bullet_entered(area: Area) -> void:
-	if kill_mode:
+	if kill_mode or dead:
 		return
-	GlobalData.projectile += 1
+	dead = true
 	GlobalData.player.add_trauma(0.08)
 	GlobalData.player.flash(0.2)
 	$Death.play_sound()
@@ -31,6 +33,6 @@ func _on_main_pulse() -> void:
 func kill() -> void:
 	kill_mode = true
 	var target = GlobalData.player.global_transform.origin
-	target.y -= 0.3
+	target.y -= 0.5
 	$Tween.interpolate_property(self, "global_transform:origin", null, target, 0.4)
 	$Tween.start()

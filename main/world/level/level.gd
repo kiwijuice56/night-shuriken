@@ -1,6 +1,7 @@
 extends Spatial
 class_name Level
 
+export var init_stars := 45
 export var pulse_time := 3.0
 export(Array, PackedScene) var enemies: Array
 var speed_scale := 1.0 setget set_speed_scale
@@ -17,6 +18,7 @@ func set_speed_scale(new_scale) -> void:
 onready var pulse_timer := $MainPulse
 
 signal main_pulse_timeout
+signal level_finished
 
 func _ready() -> void:
 	self.speed_scale = speed_scale
@@ -36,6 +38,10 @@ func spawn_enemy(pos: int) -> void:
 	$SpawnedEnemies.add_child(new_enemy)
 	new_enemy.global_transform.origin = $EnemySpawns.get_child(pos).global_transform.origin
 	new_enemy.global_transform.origin.y += new_enemy.offset_y
+	new_enemy.look_at(GlobalData.player.global_transform.origin, Vector3.UP)
+	new_enemy.rotation_degrees.y -= 180
+	new_enemy.rotation_degrees.x = 0
+	new_enemy.rotation_degrees.z = 0
 
 func play_level() -> void:
 	for light in $Lights.get_children():
