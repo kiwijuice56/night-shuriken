@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://main/world/player/player.gd" type="Script" id=1]
 [ext_resource path="res://main/ui.gd" type="Script" id=2]
@@ -8,25 +8,30 @@
 [ext_resource path="res://main/shader/opposite_ui.gdshader" type="Shader" id=6]
 [ext_resource path="res://main/ui/go3v2.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://main/ui/projectile_label.gd" type="Script" id=8]
+[ext_resource path="res://main/ui/splash.png" type="Texture" id=9]
+[ext_resource path="res://main/ui/title.gd" type="Script" id=10]
+[ext_resource path="res://main/ui/start.wav" type="AudioStream" id=11]
+[ext_resource path="res://main/main.gd" type="Script" id=12]
+[ext_resource path="res://main/world/enemy/death.wav" type="AudioStream" id=13]
+[ext_resource path="res://main/music/title_loop.mp3" type="AudioStream" id=14]
+
+[sub_resource type="Shader" id=9]
+code = "shader_type canvas_item;
+
+void fragment() {
+	float ir = (1.0 - textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0).r);
+	COLOR = vec4(ir, 0, 0, texture(TEXTURE, UV).a);
+}"
 
 [sub_resource type="ShaderMaterial" id=6]
-shader = ExtResource( 6 )
+shader = SubResource( 9 )
 
 [sub_resource type="Animation" id=5]
 resource_name = "shoot"
 length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("Flash:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, false ]
-}
+
+[sub_resource type="SphereShape" id=17]
+radius = 0.2
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 6 )
@@ -38,14 +43,274 @@ shader = ExtResource( 6 )
 size = 32
 font_data = ExtResource( 7 )
 
-[node name="Main" type="Node"]
+[sub_resource type="DynamicFont" id=10]
+size = 64
+font_data = ExtResource( 7 )
 
-[node name="LevelOne" parent="." instance=ExtResource( 4 )]
+[sub_resource type="DynamicFont" id=11]
+size = 32
+font_data = ExtResource( 7 )
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Splash:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Description:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Title:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Credit:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ColorRect:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("HBoxContainer:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ColorRect2:color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "load"
+length = 6.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Splash:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.3, 0.7, 1.6, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Description:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6.1, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Title:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 5.5, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Credit:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 2.8, 3.2, 4.1, 4.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1.07177 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ColorRect:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("HBoxContainer:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ColorRect2:color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "restart"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "start"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Description:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.2, 1.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Title:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "tutorial"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 7.6, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=15]
+size = 32
+font_data = ExtResource( 7 )
+
+[node name="Main" type="Node"]
+script = ExtResource( 12 )
+levels = [ ExtResource( 4 ) ]
 
 [node name="Player" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.308112, -1.64929 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.286194, -1.53564 )
 current = true
 script = ExtResource( 1 )
+decay = 0.4
 mouse_sensitivity = 3.0
 bullet_scene = ExtResource( 5 )
 
@@ -54,12 +319,24 @@ visible = false
 material = SubResource( 6 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+color = Color( 1, 0, 0, 0.203922 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
 anims/shoot = SubResource( 5 )
+
+[node name="Hitbox" type="Area" parent="Player"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Player/Hitbox"]
+shape = SubResource( 17 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource( 13 )
+volume_db = -3.0
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
@@ -89,6 +366,7 @@ __meta__ = {
 }
 
 [node name="ProjectileLabel" type="Label" parent="UILayer"]
+modulate = Color( 1, 1, 1, 0 )
 material = SubResource( 8 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -108,3 +386,141 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="UILayer/ProjectileLabel"]
 
 [node name="Timer" type="Timer" parent="UILayer/ProjectileLabel"]
+
+[node name="TitleScreen" type="Control" parent="UILayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UILayer/TitleScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="UILayer/TitleScreen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -227.0
+margin_top = -36.0
+margin_right = 227.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 10 )
+text = "Night Shuriken"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="Label" parent="UILayer/TitleScreen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -230.0
+margin_top = 28.0
+margin_right = 224.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 11 )
+text = "Click to start"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Credit" type="Label" parent="UILayer/TitleScreen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -227.0
+margin_top = -37.5
+margin_right = 227.0
+margin_bottom = 37.5
+custom_fonts/font = SubResource( 11 )
+text = "Eric Alfaro
+Kiwijuice56"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Splash" type="TextureRect" parent="UILayer/TitleScreen"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UILayer/TitleScreen"]
+autoplay = "load"
+anims/RESET = SubResource( 12 )
+anims/load = SubResource( 13 )
+anims/restart = SubResource( 18 )
+anims/start = SubResource( 14 )
+anims/tutorial = SubResource( 16 )
+
+[node name="TitleLoop" type="AudioStreamPlayer" parent="UILayer/TitleScreen"]
+stream = ExtResource( 14 )
+volume_db = -4.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UILayer/TitleScreen"]
+stream = ExtResource( 11 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/TitleScreen"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -340.0
+margin_top = -76.0
+margin_right = 337.0
+margin_bottom = -36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UILayer/TitleScreen/HBoxContainer"]
+margin_top = 2.0
+margin_right = 64.0
+margin_bottom = 38.0
+custom_fonts/font = SubResource( 15 )
+text = "Use "
+
+[node name="Label2" type="Label" parent="UILayer/TitleScreen/HBoxContainer"]
+margin_left = 68.0
+margin_top = 2.0
+margin_right = 373.0
+margin_bottom = 38.0
+custom_colors/font_color = Color( 0.603922, 0, 0, 1 )
+custom_fonts/font = SubResource( 15 )
+text = "left mouse / space "
+
+[node name="Label3" type="Label" parent="UILayer/TitleScreen/HBoxContainer"]
+margin_left = 377.0
+margin_top = 2.0
+margin_right = 677.0
+margin_bottom = 38.0
+custom_fonts/font = SubResource( 15 )
+text = "to shoot shurikens"
+
+[node name="ColorRect2" type="ColorRect" parent="UILayer/TitleScreen"]
+modulate = Color( 0, 0, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]

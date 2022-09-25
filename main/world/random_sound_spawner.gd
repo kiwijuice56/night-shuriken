@@ -29,7 +29,7 @@ func play_sound() -> void:
 	if sound_player is AudioStreamPlayer:
 		sound_player.volume_db = volume 
 	else:
-		sound_player.max_db = volume 
+		sound_player.unit_db = volume 
 	sound_player.stream = sounds[randi() % len(sounds)]
 	
 	if positional:

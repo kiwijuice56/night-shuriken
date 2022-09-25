@@ -9,7 +9,8 @@ var next_speed := 1.0
 func set_speed_scale(new_scale) -> void:
 	speed_scale = new_scale
 	for light in $Lights.get_children():
-		light.get_node("AnimationPlayer").playback_speed = speed_scale
+		if light.has_node("AnimationPlayer"):
+			light.get_node("AnimationPlayer").playback_speed = speed_scale
 	$MainPulse.wait_time = pulse_time / speed_scale
 	$Music.pitch_scale = speed_scale
 
@@ -21,8 +22,6 @@ func _ready() -> void:
 	self.speed_scale = speed_scale
 	$MainPulse.connect("timeout", self, "_on_main_pulse")
 	$MainPulse.wait_time = pulse_time
-	$MainPulse.start()
-	play_level()
 
 func _on_main_pulse() -> void:
 	if next_speed != 1.0:
@@ -30,16 +29,21 @@ func _on_main_pulse() -> void:
 	next_speed = 1.0
 	emit_signal("main_pulse_timeout")
 	$MainPulse.start()
-	print(speed_scale, $MainPulse.wait_time)
-	
 
 func spawn_enemy(pos: int) -> void:
 	var new_enemy: Enemy = enemies[randi() % len(enemies)].instance()
+	connect("main_pulse_timeout", new_enemy, "_on_main_pulse")
 	$SpawnedEnemies.add_child(new_enemy)
 	new_enemy.global_transform.origin = $EnemySpawns.get_child(pos).global_transform.origin
+	new_enemy.global_transform.origin.y += new_enemy.offset_y
 
 func play_level() -> void:
-	pass
+	for light in $Lights.get_children():
+		light.get_child(0).current_animation = "flicker"
+		$Music.playing = true
+	for enemy in $SpawnedEnemies.get_children():
+		enemy.queue_free()
+	$MainPulse.start()
 
 func queue_speed(new_speed) -> void:
 	self.next_speed = new_speed

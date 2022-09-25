@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/basic2.obj-5182b3e1c1b04edf0d8cf1c1bb9a5e32.mesh"
+
+[deps]
+
+files=[ "res://.import/basic2.obj-5182b3e1c1b04edf0d8cf1c1bb9a5e32.mesh" ]
+
+source_file="res://main/world/enemy/basic/basic2.obj"
+dest_files=[ "res://.import/basic2.obj-5182b3e1c1b04edf0d8cf1c1bb9a5e32.mesh", "res://.import/basic2.obj-5182b3e1c1b04edf0d8cf1c1bb9a5e32.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286
