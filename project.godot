@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://main/world/player/bullet/bullet.gd"
 }, {
+"base": "ColorRect",
+"class": "ChromaticCover",
+"language": "GDScript",
+"path": "res://main/ui/chromatic_cover.gd"
+}, {
 "base": "Spatial",
 "class": "Enemy",
 "language": "GDScript",
@@ -66,6 +71,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Bullet": "",
+"ChromaticCover": "",
 "Enemy": "",
 "Level": "",
 "LevelOne": "",
@@ -80,7 +86,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="UTGamejam"
+config/name="Night Shuriken"
 run/main_scene="res://main/Main.tscn"
 boot_splash/image="res://main/ui/splash_real.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )

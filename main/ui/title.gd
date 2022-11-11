@@ -5,7 +5,6 @@ func _ready() -> void:
 	GlobalData.player.connect("restart", self, "_on_restart")
 	set_process_input(false)
 	yield($AnimationPlayer, "animation_finished")
-	$TitleLoop.playing = true
 	set_process_input(true)
 
 func _on_restart() -> void:
@@ -17,7 +16,6 @@ func _input(event) -> void:
 	if event.is_action_pressed("shoot", false):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		$AnimationPlayer.current_animation = "start"
-		$TitleLoop.playing = false
 		start_game()
 		set_process_input(false)
 

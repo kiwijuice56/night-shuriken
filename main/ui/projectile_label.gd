@@ -10,7 +10,7 @@ func _on_projectile_changed(new) -> void:
 	text = str(new)
 	$Tween.interpolate_property(self, "modulate:a", null, 1.0, 0.05)
 	$Tween.start()
-	$Timer.start(2.0)
+	$Timer.start(2.5)
 
 func _on_timeout() -> void:
 	$Tween.interpolate_property(self, "modulate:a", null, 0.0, 0.15)

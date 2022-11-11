@@ -24,18 +24,28 @@ func _ready() -> void:
 	self.speed_scale = speed_scale
 	$MainPulse.connect("timeout", self, "_on_main_pulse")
 	$MainPulse.wait_time = pulse_time
+	
+	# load in particles to reduce lag when first played
+	var particle_enemy: Enemy = enemies[0].instance()
+	add_child(particle_enemy)
+	particle_enemy.get_node("Blood").emitting = true
+	particle_enemy.queue_free()
 
 func _on_main_pulse() -> void:
 	if next_speed != 1.0:
 		self.speed_scale = next_speed
 	next_speed = 1.0
+	for light in $Lights.get_children():
+		if light.has_node("AnimationPlayer"):
+			light.get_node("AnimationPlayer").stop()
+			light.get_node("AnimationPlayer").current_animation = "flicker"
 	emit_signal("main_pulse_timeout")
 	$MainPulse.start()
 
 func spawn_enemy(pos: int) -> void:
-	var new_enemy: Enemy = enemies[randi() % len(enemies)].instance()
+	var new_enemy: Enemy = enemies[0].instance()
+	add_child(new_enemy)
 	connect("main_pulse_timeout", new_enemy, "_on_main_pulse")
-	$SpawnedEnemies.add_child(new_enemy)
 	new_enemy.global_transform.origin = $EnemySpawns.get_child(pos).global_transform.origin
 	new_enemy.global_transform.origin.y += new_enemy.offset_y
 	new_enemy.look_at(GlobalData.player.global_transform.origin, Vector3.UP)
@@ -52,4 +62,4 @@ func play_level() -> void:
 	$MainPulse.start()
 
 func queue_speed(new_speed) -> void:
-	self.next_speed = new_speed
+	next_speed = new_speed
